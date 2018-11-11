@@ -1,0 +1,125 @@
+body {
+    background: url(https://skribbl.io/res/background.png) center fixed;
+    background-size: 256px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-bottom: 60px;
+}
+
+label > div {
+    background-color: #FFFFFF;
+    border-radius: 1em;
+    padding: 4px;
+}
+
+div.box {
+    background-color: white;
+    border-radius: 1em;
+    padding: 8px;
+    width: 800px;
+    display: block;
+    margin: 10px auto 0 auto;
+}
+
+textarea {
+    font-family: inherit;
+    outline: none !important;
+    border: 1px solid #cecece;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 4px;
+    display: block;
+    width: 100%;
+    height: 250px;
+    min-height: 70px;
+    resize: vertical;
+    border-radius: 1em;
+}
+
+input[type=submit], button#copy_words {
+    display: block;
+    margin: 0 auto;
+    width: 30%;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+    text-align: center;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+    color: #FFF;
+    outline: none !important;
+}
+
+button#copy_words {
+    background-color: #205fb8;
+    border-color: #204e9c;
+    position: relative;
+}
+
+select[disabled] {
+    height: 30px;
+    border-radius: 1em;
+    width: 125px;
+    padding: 6px;
+    color: gray;
+    background: #80808050;
+}
+
+a.game-link {
+    display: block;
+    text-align: center;
+    font-size: 28px;
+    margin-top: 10px;
+}
+
+div.copied {
+    background-color: rgb(218, 218, 218);
+    border-radius: 1em;
+    height: 55px;
+    width: 200px;
+    text-align: center;
+    color: #000;
+    vertical-align: middle;
+    display: inline-block;
+    position: absolute;
+    left: -205px;
+    top: 0;
+}
+
+div.copied > div.arrow {
+    background-color: inherit;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 19.5px;
+    right: -8px;
+    transform: rotate(45deg);
+}
+
+div.copied > span {
+    top: 16px;
+    position: relative;
+}
+
+.footer {
+    display: table;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    background-color: white;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+
+.footer > div {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.hidden {
+    display: none !important;
+}
