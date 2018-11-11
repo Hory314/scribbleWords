@@ -26,4 +26,15 @@ $(document).ready(function ()
             }, 5500);
         }
     });
+
+    // for admin page
+    let rejectButtons = $("button.reject");
+    rejectButtons.on("click", function (event)
+    {
+        event.preventDefault();
+        $(this).css("display", "none");
+        $(this).prev().css("display", "none");
+        $(this).next().css("display", "inline").attr("required", true).attr("autofocus", true);
+        $(this).next().next().css("display", "inline");
+    });
 });

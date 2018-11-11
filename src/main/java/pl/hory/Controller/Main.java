@@ -21,35 +21,59 @@ public class Main extends HttpServlet
     {
         Map<String, String> incorrectWords = new HashMap<>();
         WordDao wordDao = new WordDao();
+        int successCount = 0;
+        int failCount = 0;
 
         String newWords = request.getParameter("new_words");
         StringTokenizer st = new StringTokenizer(newWords, ",");
         while (st.hasMoreTokens())
         {
-            String word = st.nextToken().toLowerCase();
-            System.out.println("Parsed word: " + word);
+            String word = st.nextToken().trim();
+            //System.out.println("Parsed word: " + word);
 
             // System.out.println("Pobrane z DB = " + wordDao.getByWord(word).getWord() + " =? " + word + " Pobrane z param");
+            Word wordInDB = wordDao.getByWord(word);
 
             if (word.length() < 3)
             {
-                System.out.println("Słowo jest za krótkie." + word);
-                incorrectWords.put(word, "Słowo jest za krótkie.");
+                System.out.println("Słowo jest za krótkie: " + word);
+                incorrectWords.put(word, "Słowo jest za krótkie");
+                failCount++;
             }
             else if (word.length() > 32)
             {
-                System.out.println("Słowo jest za długie." + word);
-                incorrectWords.put(word, "Słowo jest za długie.");
+                System.out.println("Słowo jest za długie: " + word);
+                incorrectWords.put(word, "Słowo jest za długie");
+                failCount++;
             }
             else if (!word.matches("^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ -]*$"))
             {
-                System.out.println("Słowo zawiera niedozwolone znaki." + word);
-                incorrectWords.put(word, "Słowo zawiera niedozwolone znaki.");
+                System.out.println("Słowo zawiera niedozwolone znaki: " + word);
+                incorrectWords.put(word, "Słowo zawiera niedozwolone znaki");
+                failCount++;
             }
-            else if (false/*wordDao.getByWord(word).getWord().*/) // todo :: npe here
+            else if (wordInDB != null)
             {
-                System.out.println("Słowo zostało już dodane." + word);
-                incorrectWords.put(word, "Słowo zostało już dodane.");
+                System.out.println("Słowo zostało już dodane: " + word);
+                String msg;
+
+                if (wordInDB.getAccepted().equals("yes"))
+                {
+                    msg = "Słowo jest już zaakceptowane";
+                }
+                else
+                {
+                    if (wordInDB.getRejectReason() != null)
+                    {
+                        msg = "Słowo odrzucone z powodu: " + wordInDB.getRejectReason();
+                    }
+                    else
+                    {
+                        msg = "Słowo jest już dodane i oczekuje na weryfikację";
+                    }
+                }
+                incorrectWords.put(word, msg);
+                failCount++;
             }
             else // slowo ok
             {
@@ -67,7 +91,7 @@ public class Main extends HttpServlet
                     String ipAddress = inetAddress.getHostAddress();
                     ip = ipAddress;
                 }
-                System.out.println(ip);
+                // System.out.println(ip);
 
                 newWord.setWord(word);
                 newWord.setAddDate(now.format(formatter));
@@ -75,16 +99,22 @@ public class Main extends HttpServlet
                 newWord.setAccepted("no");
 
                 wordDao.save(newWord);
+                successCount++;
             }
         }
+
+        request.setAttribute("successCount", successCount);
+        request.setAttribute("failCount", failCount);
+        request.setAttribute("incorrectWords", incorrectWords);
+        request.setAttribute("postResult", true);
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         WordDao wordDao = new WordDao();
-        List<Word> words = wordDao.findAll();
-        int count = wordDao.count();
+        List<Word> words = wordDao.findAll("where `accepted` = 'yes' ORDER BY RAND()");
+        int count = wordDao.count("where `accepted` = 'yes'");
 
         request.setAttribute("words", words);
         request.setAttribute("words_count", count);

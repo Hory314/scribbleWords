@@ -15,9 +15,14 @@ public class WordDao
     private String dbName = "scribble_words";
     private String tableName = "polish";
 
-    public int count()
+    public int count(String where)
     {
-        String query = "select COUNT(*) AS count from " + tableName;
+        if (where == null)
+        {
+            where = "";
+        }
+
+        String query = "select COUNT(*) AS count from " + tableName + " " + where;
 
         try
         {
@@ -32,10 +37,19 @@ public class WordDao
         return 0;
     }
 
-    public List<Word> findAll()
+    public int count()
     {
+        return count(null);
+    }
 
-        String query = "Select id, word, add_date, INET_NTOA(adder_ip) AS adder_ip, accepted, reject_reason, review_date from " + tableName/* + "WHERE `accepted` = 'yes'"*/;
+    public List<Word> findAll(String where)
+    {
+        if (where == null)
+        {
+            where = "";
+        }
+
+        String query = "Select id, word, add_date, INET_NTOA(adder_ip) AS adder_ip, accepted, reject_reason, review_date from " + tableName + " " + where;
         try
         {
             List<Map<String, String>> result = DBService.executeSelectQuery(dbName, query, null);
@@ -56,6 +70,11 @@ public class WordDao
             System.out.println(e);
         }
         return null;
+    }
+
+    public List<Word> findAll()
+    {
+        return findAll(null);
     }
 
     public Word getById(Integer id)
@@ -85,7 +104,7 @@ public class WordDao
 
     public Word getByWord(String word)
     {
-        String query = "Select id, word, add_date, INET_NTOA(adder_ip) AS adder_ip, accepted, reject_reason, review_date from " + tableName + " where `word` = ?";
+        String query = "Select id, word, add_date, INET_NTOA(adder_ip) AS adder_ip, accepted, reject_reason, review_date from " + tableName + " where `word` = BINARY(?)";
         List<String> params = new ArrayList<>();
         params.add(word);
 
@@ -98,7 +117,6 @@ public class WordDao
 
                 Word newWord = createWord(resultWord);
 
-                System.out.println(newWord);
                 return newWord;
             }
         }

@@ -11,7 +11,7 @@
                 Możesz wpisać wiele słów na raz oddzielając je przecinkiem.<br>
                 Każde słowo musi mieć minimum 3 znaki, a maksymalnie 32 (włącznie ze znakami specjalnymi)<br>
                 Nie używaj znaków specjalnych oprócz przecinka, myślnika i spacji.<br>
-                Znaki w języku polskim są dozwolone, wielkość liter nie ma znaczenia.<br>
+                Znaki w języku polskim są dozwolone. Używaj wielkich liter kiedy potrzeba.<br>
                 Słowa zostaną dodane do bazy dopiero po sprawdzeniu przez Admnistratora.
             </div>
             <textarea name="new_words" placeholder="słowa,oddzielone,przecinkiem" required autofocus></textarea>
@@ -19,10 +19,26 @@
         <input type="submit" value="Dodaj słowa">
     </form>
 </div>
-
-<div class="box" style="display: none;">
-    placeholder na errory po dodaniu
+<%-- POST status box --%>
+<c:if test="${postResult}">
+<div class="box" style="/*display: none;*/">
+    <p style="color: green;">Dodano: <strong>${successCount}</strong></p>
+    <p style="color: red;">Odrzucono: <strong>${failCount}</strong>
+    <c:if test="${failCount != '0'}"> z następujących powodów:</p>
+    <table>
+        <tbody>
+        <c:forEach items="${incorrectWords}" var="entry">
+            <tr>
+                <td style="color: red;">${entry.key}</td>
+                <td>${entry.value}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    </c:if>
 </div>
+</c:if>
+<%-- POST status box --%>
 
 <div class="box">
     <p>Liczba słów w bazie: <strong>${words_count}</strong></p>
@@ -34,7 +50,7 @@
     <button id="copy_words">
         <div class="copied" style="display: none;">
             <div class="arrow"></div>
-            <span>Skopiowano!</span>
+            <span>Skopiowano <strong>${words_count}</strong>!</span>
         </div>
         Kopiuj do schowka
         <svg style="fill: white;" viewBox="0 0 14 16" version="1.1" width="25" height="25" aria-hidden="true">

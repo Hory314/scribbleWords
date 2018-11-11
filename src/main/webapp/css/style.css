@@ -51,6 +51,13 @@ input[type=submit], button#copy_words {
     outline: none !important;
 }
 
+form > p:not(:last-of-type)
+{
+    width: 200px;
+    display: block;
+    margin: 5px auto 0 auto;
+}
+
 button#copy_words {
     background-color: #205fb8;
     border-color: #204e9c;

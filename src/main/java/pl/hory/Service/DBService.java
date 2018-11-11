@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class DBService
 {
-    private static final String host = "localhost"; // for local testing
-    //private static final String host = "jws-app-mysql"; // for openshift
+    //private static final String host = "localhost"; // for local testing
+    private static final String host = "jws-app-mysql"; // for openshift
     private static final String dbName = "scribble_words";
     private static final String port = "3306";
     private static final String user = "root";
