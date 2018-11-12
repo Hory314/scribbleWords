@@ -36,5 +36,7 @@ $(document).ready(function ()
         $(this).prev().css("display", "none");
         $(this).next().css("display", "inline").attr("required", true).attr("autofocus", true);
         $(this).next().next().css("display", "inline");
+        $(this).prev().prev().attr("disabled", true);
+        $(this).prev().prev().val($(this).prev().prev().attr("data-org-word"));
     });
 });

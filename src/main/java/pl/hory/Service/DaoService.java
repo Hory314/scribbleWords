@@ -8,7 +8,7 @@ import java.util.List;
 
 public class DaoService
 {
-    public static void setNewId(Object obj, String query, List<String> params, String dbName)
+    public static void setNewId(Object obj, String query, List<String> params, String dbName) throws SQLException
     {
         try
         {
@@ -25,6 +25,7 @@ public class DaoService
         {
             //should be logger - save info about error
             System.out.println(e);
+            throw e;
         }
     }
 

@@ -42,7 +42,7 @@ public class WordDao
         return count(null);
     }
 
-    public List<Word> findAll(String where)
+    public List<Word> findAll(String where) throws SQLException
     {
         if (where == null)
         {
@@ -68,11 +68,12 @@ public class WordDao
         catch (SQLException e)
         {
             System.out.println(e);
+            throw e;
         }
         return null;
     }
 
-    public List<Word> findAll()
+    public List<Word> findAll() throws SQLException
     {
         return findAll(null);
     }
@@ -142,19 +143,26 @@ public class WordDao
         return word;
     }
 
-    public void save(Word word)
+    public void save(Word word) throws SQLException
     {
-        if (word.getId() == null)
+        try
         {
-            add(word);
+            if (word.getId() == null)
+            {
+                add(word);
+            }
+            else
+            {
+                update(word);
+            }
         }
-        else
+        catch (SQLException e)
         {
-            update(word);
+            throw e;
         }
     }
 
-    private void add(Word word)
+    private void add(Word word) throws SQLException
     {
         String query = "Insert into " + tableName + " values (null, ?, ?, INET_ATON(?), ?, ?, ?)"; // pamietac o kolejnosci dodawania do listy params
 
@@ -165,7 +173,14 @@ public class WordDao
         params.add(word.getAccepted());
         params.add(word.getRejectReason());
         params.add(word.getReviewDate());
-        DaoService.setNewId(word, query, params, dbName);
+        try
+        {
+            DaoService.setNewId(word, query, params, dbName);
+        }
+        catch (SQLException e)
+        {
+            throw e;
+        }
     }
 
     private void update(Word word)

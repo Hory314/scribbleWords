@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -16,10 +19,35 @@ import java.util.List;
 @WebServlet(name = "Manage", urlPatterns = {"/adminpanel/manage", "/adminpanel/manage/"})
 public class Manage extends HttpServlet
 {
+    private boolean isCorrect(String word)
+    {
+        if (word.length() < 3)
+        {
+            return false;
+        }
+        else if (word.length() > 32)
+        {
+            return false;
+        }
+        else if (!word.matches("^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ -]*$"))
+        {
+            return false;
+        }
+       /* else if (wordInDB != null)
+        {
+            return false;
+        }*/
+        else // slowo ok
+        {
+            return true;
+        }
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String wordId = request.getParameter("word_id");
         String rejectReason = request.getParameter("reject_reason");
+        String formWord = request.getParameter("word");
         System.out.println("reject reason: " + rejectReason + ".");
 
         LocalDateTime now = LocalDateTime.now();
@@ -32,7 +60,34 @@ public class Manage extends HttpServlet
 
             if (rejectReason.equals("")) // jak puste to slowo zaakceptowane
             {
-                word.setAccepted("yes");
+                if (wordDao.getByWord(formWord) == null /*&& isCorrect(formWord)*/) // jesli nie znaleziono takiego slowa w bazie
+                {
+                    if (isCorrect(formWord))
+                    {
+                        word.setWord(formWord);
+                        word.setAccepted("yes");
+                    }
+                    else
+                    {
+                        request.setAttribute("error", "Słowo już istnieje lub zawiera błędy.");
+                        doGet(request, response);
+                        return;
+                    }
+                }
+                else // istnieje , ale...
+                {
+                    if (wordDao.getByWord(formWord).getId().equals(word.getId())) // jesli ID slowa z formularz z bazy == słowu o ID z hidden to puszczam
+                    {
+                        // slowo zostaje
+                        word.setAccepted("yes");
+                    }
+                    else
+                    {
+                        request.setAttribute("error", "Słowo już istnieje lub zawiera błędy.");
+                        doGet(request, response);
+                        return;
+                    }
+                }
             }
             else // odrzucone
             {
@@ -40,7 +95,16 @@ public class Manage extends HttpServlet
                 word.setRejectReason(rejectReason);
             }
             word.setReviewDate(now.format(formatter));
-            wordDao.save(word); // update
+
+            try
+            {
+                wordDao.save(word); // update
+            }
+            catch (SQLException e)
+            {
+                System.out.println(e);
+                e.printStackTrace();
+            }
         }
         catch (NumberFormatException e)
         {
@@ -52,9 +116,21 @@ public class Manage extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         WordDao wordDao = new WordDao();
-        List<Word> words = wordDao.findAll("WHERE `accepted` = 'no' AND `reject_reason` IS NULL");
-        int toCheckCount = wordDao.count("WHERE `accepted` = 'no' AND `reject_reason` IS NULL");
+        List<Word> words = null;
+        int toCheckCount = 0;
 
+        try
+        {
+            words = wordDao.findAll("WHERE `accepted` = 'no' AND `reject_reason` IS NULL");
+            toCheckCount = wordDao.count("WHERE `accepted` = 'no' AND `reject_reason` IS NULL");
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e);
+            e.printStackTrace();
+            toCheckCount = 0;
+            request.setAttribute("error", "Niepowodzenie. Brak połączenia z bazą danych. Proszę powiadomić administratora.");
+        }
         request.setAttribute("words", words);
         request.setAttribute("count", toCheckCount);
         getServletContext().getRequestDispatcher("/WEB-INF/views/admin/manage.jsp").forward(request, response);

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -26,6 +27,8 @@ public class Main extends HttpServlet
 
         String newWords = request.getParameter("new_words");
         StringTokenizer st = new StringTokenizer(newWords, ",");
+        int stLength = st.countTokens(); // if fails
+
         while (st.hasMoreTokens())
         {
             String word = st.nextToken().trim();
@@ -98,8 +101,20 @@ public class Main extends HttpServlet
                 newWord.setAdderIp(ip);
                 newWord.setAccepted("no");
 
-                wordDao.save(newWord);
-                successCount++;
+                try
+                {
+                    wordDao.save(newWord);
+                    successCount++;
+                }
+                catch (SQLException e)
+                {
+                    e.printStackTrace();
+                    System.out.println(e);
+                    request.setAttribute("error", "Niepowodzenie. Brak połączenia z bazą danych. Proszę spróbować później.");
+                    failCount = stLength;
+                    successCount = 0;
+                    break;
+                }
             }
         }
 
@@ -112,9 +127,21 @@ public class Main extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        int count = 0;
+        List<Word> words = null;
         WordDao wordDao = new WordDao();
-        List<Word> words = wordDao.findAll("where `accepted` = 'yes' ORDER BY RAND()");
-        int count = wordDao.count("where `accepted` = 'yes'");
+        try
+        {
+            words = wordDao.findAll("where `accepted` = 'yes' ORDER BY RAND()");
+            count = wordDao.count("where `accepted` = 'yes'");
+        }
+        catch (SQLException e)
+        {
+            count = 0;
+            request.setAttribute("error", "Niepowodzenie. Brak połączenia z bazą danych. Proszę spróbować później.");
+            System.out.println(e);
+            e.printStackTrace();
+        }
 
         request.setAttribute("words", words);
         request.setAttribute("words_count", count);
