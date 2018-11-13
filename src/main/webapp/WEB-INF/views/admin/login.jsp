@@ -3,7 +3,7 @@
 <jsp:include page="../template/doc_header.jsp"/>
 <h1>Zaloguj się jako administrator</h1>
 <hr>
-${login_info}
+<c:out value="${login_info}"></c:out>
 <form action="<c:url value="/adminpanel" />" method="post">
     <p><input type="text" name="login" placeholder="Login"/></p>
     <p><input type="password" name="password" placeholder="Hasło"/></p>

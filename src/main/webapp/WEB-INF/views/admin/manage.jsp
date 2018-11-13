@@ -9,7 +9,7 @@
     Możesz poprawić słowo (np. jak ktoś zrobił literówkę), ale zachowaj rozwagę.<br>
     <strong>Jeśli wystąpi błąd: <i>500 - INTERNAL SERVER ERROR</i> lub inny problem powiadom administratora (Horego)</strong>
 <p>Słów do sprawdzenia: <strong>${count}</strong></p>
-<span style="color: red;">${error}</span>
+<span style="color: red;"><c:out value="${error}"></c:out></span>
 <c:forEach var="word" items="${words}">
     <form action="/adminpanel/manage" method="post">
         <input type="text" value="${word.word}" data-org-word="${word.word}" name="word">
