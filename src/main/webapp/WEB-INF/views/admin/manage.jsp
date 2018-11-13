@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../template/admin_header.jsp"/>
 <a href="/adminpanel/logout">Wyloguj się</a>

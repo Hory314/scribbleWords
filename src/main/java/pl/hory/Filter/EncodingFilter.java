@@ -19,19 +19,12 @@ public class EncodingFilter implements Filter
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException
     {
         req.setCharacterEncoding("UTF-8");
+        resp.setContentType("text/html; charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html;charset=UTF-8");
-
-        HttpServletRequest request = (HttpServletRequest) req; // full request
-        HttpServletResponse response = (HttpServletResponse) resp; // full response
-
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
 
         System.err.println(LocalDateTime.now() + ": " + this.getClass().getSimpleName() + " executed.\nzażółć gęślą jaźń\nZAŻÓŁĆ GĘŚLĄ JAŹŃ");
 
-        chain.doFilter(request, response);
+        chain.doFilter(req, resp);
     }
 
     public void init(FilterConfig config) throws ServletException
