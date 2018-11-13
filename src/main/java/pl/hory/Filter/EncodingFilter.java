@@ -18,14 +18,14 @@ public class EncodingFilter implements Filter
     {
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html");
+        resp.setContentType("text/html;charset=UTF-8");
 
         HttpServletRequest request = (HttpServletRequest)req; // full request
         HttpServletResponse response = (HttpServletResponse) resp; // full response
 
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html");
+        response.setContentType("text/html;charset=UTF-8");
 
         System.err.println(LocalDateTime.now() + ": " + this.getClass().getSimpleName() + " executed.");
 
