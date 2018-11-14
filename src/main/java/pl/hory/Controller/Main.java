@@ -43,7 +43,7 @@ public class Main extends HttpServlet
                 incorrectWords.put(word, "Słowo jest za krótkie");
                 failCount++;
             }
-            else if (word.length() > 32)
+            else if (word.length() > 30)
             {
                 System.out.println("Słowo jest za długie: " + word);
                 incorrectWords.put(word, "Słowo jest za długie");

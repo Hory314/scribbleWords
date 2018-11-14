@@ -8,12 +8,20 @@ import java.util.Map;
 
 public class DBService
 {
-    //private static final String host = "localhost"; // for local testing
-    private static final String host = "jws-app-mysql"; // for openshift
-    private static final String dbName = "scribble_words";
+    // openshift
+
+    private static final String host = "jws-app-mysql";
+    private static final String dbName = "root";
     private static final String port = "3306";
-    private static final String user = "root";
-    private static final String password = "coderslab";
+    private static final String user = "userE7N";
+    private static final String password = "GfGS3Axr";
+
+//    localhost
+//    private static final String host = "localhost"; // for local testing
+//    private static final String dbName = "scribble_words";
+//    private static final String port = "3306";
+//    private static final String user = "root";
+//    private static final String password = "coderslab";
 
     public static Connection connect(String database) throws SQLException
     {

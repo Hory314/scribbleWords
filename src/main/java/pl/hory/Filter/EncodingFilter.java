@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @WebFilter(filterName = "EncodingFilter", urlPatterns = {"/*"})
 public class EncodingFilter implements Filter
 {
+    // export JAVA_TOOL_OPTIONS='-Dfile.encoding="UTF-8"'
     public void destroy()
     {
     }

@@ -25,7 +25,7 @@ public class Manage extends HttpServlet
         {
             return false;
         }
-        else if (word.length() > 32)
+        else if (word.length() > 30)
         {
             return false;
         }
