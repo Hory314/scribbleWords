@@ -67,6 +67,7 @@ public class Login extends HttpServlet
         else
         {
             request.setAttribute("login_info", "Zły login/hasło."); // mozna potem zmienic na template
+            request.setAttribute("login_info_success", "0");
 
             doGet(request, response); // jak haslo sie nie zgadza to wyswietl logowanie
         }

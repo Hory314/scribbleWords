@@ -24,7 +24,8 @@ public class Logout extends HttpServlet
         {
             session.invalidate();
         }
-        request.setAttribute("login_info", "<p style='color: green;'>Zostałeś wylogowany.</p>"); // mozna potem zmienic na template
+        request.setAttribute("login_info", "Zostałeś wylogowany."); // mozna potem zmienic na template
+        request.setAttribute("login_info_success", "1");
         System.out.println("Wylogowałem");
 
         String redirect = "/adminpanel";

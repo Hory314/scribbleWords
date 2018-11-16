@@ -1,9 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../template/doc_header.jsp"/>
 <h1>Zaloguj się jako administrator</h1>
 <hr>
-<span style='color: red;'><c:out value="${login_info}"></c:out></span>
+<span style='color:
+<c:if test="${login_info_success eq '0'}">red</c:if>
+<c:if test="${login_info_success eq '1'}">green</c:if>;'><c:out value="${login_info}"></c:out></span>
 <form action="<c:url value="/adminpanel" />" method="post">
     <p><input type="text" name="login" placeholder="Login"/></p>
     <p><input type="password" name="password" placeholder="Hasło"/></p>
