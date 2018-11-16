@@ -8,9 +8,11 @@ $(document).ready(function ()
 
     button.on("click", function ()
     {
+        textarea.css("display", "block");
         form.append(textarea);
         textarea.select();
         document.execCommand("copy");
+        textarea.css("display", "none");
         textarea.remove();
 
         $("a.game-link").slideDown(500);

@@ -44,9 +44,7 @@
     <p>Liczba słów w bazie: <strong>${words_count}</strong></p>
     <p>Skopij słowa poniższym przyciskiem i wklej je do formularza podczas tworzenia prywatnej gry.</p>
     <form id="words">
-        <textarea style="display: none;" readonly><c:forEach varStatus="loop" var="word" items="${words}">${word.word}
-            <c:if
-                    test="${!loop.last}">,</c:if></c:forEach></textarea>
+        <textarea style="display: none;" readonly><c:forEach varStatus="loop" var="word" items="${words}">${word.word}<c:if test="${!loop.last}">,</c:if></c:forEach></textarea>
     </form>
     <button id="copy_words">
         <div class="copied" style="display: none;">
