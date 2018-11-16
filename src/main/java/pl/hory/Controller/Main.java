@@ -55,7 +55,7 @@ public class Main extends HttpServlet
                 incorrectWords.put(word, "Słowo zawiera niedozwolone znaki");
                 failCount++;
             }
-            else if (wordInDB != null)
+            else if (wordInDB != null) // jest w bazie (nawet z innych wielkosci liter)
             {
                 System.out.println("Słowo zostało już dodane: " + word);
                 String msg;
@@ -68,14 +68,21 @@ public class Main extends HttpServlet
                 {
                     if (wordInDB.getRejectReason() != null)
                     {
-                        msg = "Słowo odrzucone z powodu: " + wordInDB.getRejectReason();
+                        if (wordInDB.getRejectReason().equals(""))
+                        {
+                            msg = "Słowo odrzucone przez moderatora";
+                        }
+                        else
+                        {
+                            msg = "Słowo odrzucone z powodu: " + wordInDB.getRejectReason();
+                        }
                     }
                     else
                     {
                         msg = "Słowo jest już dodane i oczekuje na weryfikację";
                     }
                 }
-                incorrectWords.put(word, msg);
+                incorrectWords.put(wordInDB.getWord(), msg);
                 failCount++;
             }
             else // slowo ok
@@ -86,7 +93,6 @@ public class Main extends HttpServlet
                 LocalDateTime now = LocalDateTime.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-                //todo :: test this on openshift
                 String ip = request.getRemoteAddr();
                 if (ip.equalsIgnoreCase("0:0:0:0:0:0:0:1"))
                 {

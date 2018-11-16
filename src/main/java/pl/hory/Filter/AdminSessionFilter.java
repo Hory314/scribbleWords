@@ -17,8 +17,8 @@ import java.util.StringTokenizer;
 public class AdminSessionFilter implements Filter
 {
     private ArrayList<String> urlList;
-    private final String adminName = "admin";
-    private final String adminPass = "coderslab";
+    private final String adminName = "admin"; // todo :: to Secret
+    private final String adminPass = "skribbl-314";
 
     public void destroy()
     {

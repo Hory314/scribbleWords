@@ -8,15 +8,15 @@ import java.util.Map;
 
 public class DBService
 {
+    // todo :: login to Secret
     // openshift
-
     private static final String host = "jws-app-mysql";
     private static final String dbName = "root";
     private static final String port = "3306";
     private static final String user = "userE7N";
     private static final String password = "GfGS3Axr";
 
-//    localhost
+    //    localhost
 //    private static final String host = "localhost"; // for local testing
 //    private static final String dbName = "scribble_words";
 //    private static final String port = "3306";

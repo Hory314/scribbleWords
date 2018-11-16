@@ -48,8 +48,8 @@ public class Manage extends HttpServlet
         String wordId = request.getParameter("word_id");
         String rejectReason = request.getParameter("reject_reason");
         String formWord = request.getParameter("word");
+        String accept= request.getParameter("accept");
         System.out.println("reject reason: " + rejectReason + ".");
-
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -58,7 +58,7 @@ public class Manage extends HttpServlet
             WordDao wordDao = new WordDao();
             Word word = wordDao.getById(Integer.parseInt(wordId));
 
-            if (rejectReason.equals("")) // jak puste to slowo zaakceptowane
+            if (accept.equals("1")) //accept = 1 - admin kliknął Akceptuj
             {
                 if (wordDao.getByWord(formWord) == null /*&& isCorrect(formWord)*/) // jesli nie znaleziono takiego slowa w bazie
                 {
@@ -89,7 +89,7 @@ public class Manage extends HttpServlet
                     }
                 }
             }
-            else // odrzucone
+            else // odrzucone przez admina
             {
                 word.setAccepted("no");
                 word.setRejectReason(rejectReason);
@@ -115,6 +115,7 @@ public class Manage extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
+        // todo :: widok wszystkich słów + ich modyfikacja/usuwanie
         WordDao wordDao = new WordDao();
         List<Word> words = null;
         int toCheckCount = 0;

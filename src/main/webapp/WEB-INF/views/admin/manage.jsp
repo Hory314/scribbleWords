@@ -4,7 +4,7 @@
 <a href="/adminpanel/logout">Wyloguj się</a>
 <p>Jeśli słowo jest prawidłowe zaakceptuj je. Jeśli nie, kliknij "Odrzuć" i wpisz przyczynę.<br>
     Nie będziesz sprawdzał tych samych słów, gdyż raz zatwierdzone lub odrzucone słowa są zapamiętywane (nie występują
-    duplikaty, chyba że wielość liter jest inna)<br>
+    duplikaty)<br>
     Zwracaj uwagę na wielkość liter, ewentualnie dokonaj poprawy.<br>
     Możesz poprawić słowo (np. jak ktoś zrobił literówkę), ale zachowaj rozwagę.<br>
     <strong>Jeśli wystąpi błąd: <i>500 - INTERNAL SERVER ERROR</i> lub inny problem powiadom administratora (Horego)</strong>
@@ -18,6 +18,7 @@
         <input type="text" name="reject_reason" placeholder="podaj powód" style="display: none;">
         <input type="submit" value="OK" style="display: none;">
         <input type="hidden" name="word_id" value="${word.id}">
+        <input type="hidden" name="accept" value="1">
     </form>
 </c:forEach>
 <jsp:include page="../template/doc_footer.jsp"/>

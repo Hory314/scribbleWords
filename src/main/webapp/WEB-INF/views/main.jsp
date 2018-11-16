@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="template/doc_header.jsp"/>
 <div class="box">
@@ -9,7 +9,7 @@
         <label>
             <div>Wpisz poniżej słowa, które chcesz dodać do bazy.<br>
                 Możesz wpisać wiele słów na raz oddzielając je przecinkiem.<br>
-                Każde słowo musi mieć minimum 3 znaki, a maksymalnie 32 (włącznie ze znakami specjalnymi)<br>
+                Każde słowo musi mieć minimum 3 znaki, a maksymalnie 30 (włącznie ze znakami specjalnymi)<br>
                 Nie używaj znaków specjalnych oprócz przecinka, myślnika i spacji.<br>
                 Znaki w języku polskim są dozwolone. Używaj wielkich liter kiedy potrzeba.<br>
                 Słowa zostaną dodane do bazy dopiero po sprawdzeniu przez Admnistratora.
@@ -44,8 +44,9 @@
     <p>Liczba słów w bazie: <strong>${words_count}</strong></p>
     <p>Skopij słowa poniższym przyciskiem i wklej je do formularza podczas tworzenia prywatnej gry.</p>
     <form id="words">
-        <textarea readonly><c:forEach varStatus="loop" var="word" items="${words}">${word.word}<c:if
-                test="${!loop.last}">,</c:if></c:forEach></textarea>
+        <textarea style="display: none;" readonly><c:forEach varStatus="loop" var="word" items="${words}">${word.word}
+            <c:if
+                    test="${!loop.last}">,</c:if></c:forEach></textarea>
     </form>
     <button id="copy_words">
         <div class="copied" style="display: none;">

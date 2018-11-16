@@ -22,19 +22,11 @@ public class EncodingFilter implements Filter
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException
     {
         Properties properties = java.lang.System.getProperties();
-
-        System.out.println(properties.getProperty("file.encoding"));
         properties.setProperty("file.encoding", "UTF-8");
-        System.out.println(properties.getProperty("file.encoding"));
-
-//        Enumeration<?> enumeration = properties.propertyNames();
-//        while (enumeration.hasMoreElements())
-//        {
-//            String key = (String) enumeration.nextElement();
-//            System.out.println(key + " : " + properties.getProperty(key));
-//        }
+        System.out.println("Java property: file.encoding=" + properties.getProperty("file.encoding"));
         // JAVA PROPERTIES
 
+        // PAGES
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
         resp.setCharacterEncoding("UTF-8");

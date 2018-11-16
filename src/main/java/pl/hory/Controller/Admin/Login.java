@@ -11,8 +11,8 @@ import java.io.IOException;
 @WebServlet(name = "Login", urlPatterns = {"/adminpanel", "/adminpanel/", "/adminpanel/login", "/adminpanel/login/"})
 public class Login extends HttpServlet
 {
-    private final String adminName = "admin";
-    private final String adminPass = "coderslab";
+    private final String adminName = "admin"; // todo :: to Secret
+    private final String adminPass = "skribbl-314";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
@@ -55,7 +55,7 @@ public class Login extends HttpServlet
                 int sessMaxAge = 60 * 60 * 24 * 3; // 3 dni
                 Cookie sessionCookie = new Cookie("session_id", newSession.getId()); // sam se stworze ciastko dla sesji...
                 sessionCookie.setMaxAge(sessMaxAge); // bo chce ustawic max age
-                //sessionCookie.setPath("/adminpanel");//narazie sie w to nie bawie // todo chyba trzeba bedzie odkomentować sadzac po tym co sie dzialo w filtrze odswiezania
+                sessionCookie.setPath("/adminpanel");
                 response.addCookie(sessionCookie);
 
                 newSession.setMaxInactiveInterval(sessMaxAge);

@@ -105,7 +105,7 @@ public class WordDao
 
     public Word getByWord(String word)
     {
-        String query = "Select id, word, add_date, INET_NTOA(adder_ip) AS adder_ip, accepted, reject_reason, review_date from " + tableName + " where `word` = BINARY(?)";
+        String query = "Select id, word, add_date, INET_NTOA(adder_ip) AS adder_ip, accepted, reject_reason, review_date from " + tableName + " where `word` = ?"; // BINARY(?) dla case sens
         List<String> params = new ArrayList<>();
         params.add(word);
 
