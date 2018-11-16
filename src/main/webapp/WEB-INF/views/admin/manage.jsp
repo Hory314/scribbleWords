@@ -12,7 +12,7 @@
 <span style="color: red;"><c:out value="${error}"></c:out></span>
 <c:forEach var="word" items="${words}">
     <form action="/adminpanel/manage" method="post">
-        <input type="text" value="${word.word}" data-org-word="${word.word}" name="word">
+        <input type="text" value="${word.word}" data-org-word="${word.word}" name="word" size="40">
         <input type="submit" value="Akceptuj">
         <button class="reject">Odrzuć</button>
         <input type="text" name="reject_reason" placeholder="podaj powód" style="display: none;">
