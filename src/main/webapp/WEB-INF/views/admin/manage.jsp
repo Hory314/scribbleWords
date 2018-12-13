@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../template/admin_header.jsp"/>
-<a href="/adminpanel/logout">Wyloguj się</a>
+<a href="/adminpanel/logout">Wyloguj się</a><br>
+<a href="/adminpanel/list">Zaakceptowane słowa</a>
 <p>Jeśli słowo jest prawidłowe zaakceptuj je. Jeśli nie, kliknij "Odrzuć" i wpisz przyczynę.<br>
     Nie będziesz sprawdzał tych samych słów, gdyż raz zatwierdzone lub odrzucone słowa są zapamiętywane (nie występują
     duplikaty)<br>
