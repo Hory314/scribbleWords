@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../template/admin_header.jsp"/>
 <a href="/adminpanel/logout">Wyloguj się</a><br>
-<a href="/adminpanel/list">Zaakceptowane słowa</a>
+<a href="/adminpanel/list">Sprawdzone słowa</a>
 <p>
     Lista słów do sprawdzenia.
 </p>

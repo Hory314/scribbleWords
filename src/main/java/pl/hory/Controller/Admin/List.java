@@ -19,10 +19,9 @@ public class List extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        String edit = request.getParameter("edit");
         String wordId = request.getParameter("word_id");
-        String formWord = request.getParameter("word");
         Integer intWordId = null;
+        WordDao wordDao = new WordDao();
         try
         {
             intWordId = Integer.parseInt(wordId);
@@ -31,7 +30,30 @@ public class List extends HttpServlet
         {
             e.printStackTrace();
         }
-        WordDao wordDao = new WordDao();
+
+        String verify = request.getParameter("verify"); // re-verification
+        if (verify.equals("1"))
+        {
+            Word word = wordDao.getById(intWordId);
+            word.setReviewDate(null);
+            word.setAccepted("no");
+            word.setRejectReason(null);
+
+            try
+            {
+                wordDao.save(word); // re-verify
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+            doGet(request, response);
+            return;
+        }
+
+        String edit = request.getParameter("edit");
+        String formWord = request.getParameter("word");
+
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -71,12 +93,14 @@ public class List extends HttpServlet
     {
         WordDao wordDao = new WordDao();
         java.util.List<Word> words = null;
+        java.util.List<Word> rejectedWords = null;
         int acceptedCount;
 
         try
         {
             words = wordDao.findAll("WHERE `accepted` = 'yes' ORDER BY id DESC");
             acceptedCount = wordDao.count("WHERE `accepted` = 'yes'");
+            rejectedWords = wordDao.findAll("WHERE `accepted` = 'no' AND `reject_reason` IS NOT NULL ORDER BY id DESC");
         }
         catch (SQLException e)
         {
@@ -87,6 +111,7 @@ public class List extends HttpServlet
         }
 
         request.setAttribute("words", words);
+        request.setAttribute("rejectedWords", rejectedWords);
         request.setAttribute("count", acceptedCount);
         getServletContext().getRequestDispatcher("/WEB-INF/views/admin/list.jsp").forward(request, response);
     }
