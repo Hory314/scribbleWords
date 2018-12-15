@@ -3,12 +3,9 @@
 <jsp:include page="../template/admin_header.jsp"/>
 <a href="/adminpanel/logout">Wyloguj się</a><br>
 <a href="/adminpanel/list">Zaakceptowane słowa</a>
-<p>Jeśli słowo jest prawidłowe zaakceptuj je. Jeśli nie, kliknij "Odrzuć" i wpisz przyczynę.<br>
-    Nie będziesz sprawdzał tych samych słów, gdyż raz zatwierdzone lub odrzucone słowa są zapamiętywane (nie występują
-    duplikaty)<br>
-    Zwracaj uwagę na wielkość liter, ewentualnie dokonaj poprawy.<br>
-    Możesz poprawić słowo (np. jak ktoś zrobił literówkę), ale zachowaj rozwagę.<br>
-    <strong>Jeśli wystąpi błąd: <i>500 - INTERNAL SERVER ERROR</i> lub inny problem powiadom administratora (Horego)</strong>
+<p>
+    Lista słów do sprawdzenia.
+</p>
 <p>Słów do sprawdzenia: <strong>${count}</strong></p>
 <span style="color: red;"><c:out value="${error}"></c:out></span>
 <c:forEach var="word" items="${words}">

@@ -42,4 +42,29 @@ $(document).ready(function ()
         $(this).prev().prev().attr("disabled", true);
         $(this).prev().prev().val($(this).prev().prev().attr("data-org-word"));
     });
+
+    // ===== //
+    let editButtons = $("button.edit");
+    editButtons.on("click", function (event)
+    {
+        event.preventDefault();
+        $(this).css("display", "none");
+        $(this).prev().attr("disabled", false).attr("autofocus", true);
+        $(this).next().css("display", "inline");
+        $(this).parent().find("input[name=edit]").val("1");
+        $(this).next().next().css("display", "none");
+    });
+
+    // ==== //
+    let delButtons = $("input.delete");
+    delButtons.on("click", function (event)
+    {
+        // "%u0105" => "ą",
+        // "%u0107" => "ć",
+        let result = confirm("Na pewno usun\u{0105}\u{0107}?");
+        if (!result)
+        {
+            event.preventDefault();
+        }
+    });
 });
