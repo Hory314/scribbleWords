@@ -2,6 +2,7 @@ package pl.hory.Controller.Admin;
 
 import pl.hory.Dao.WordDao;
 import pl.hory.Entity.Word;
+import pl.hory.Service.WordService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,30 +18,6 @@ import java.util.List;
 @WebServlet(name = "Manage", urlPatterns = {"/adminpanel/manage", "/adminpanel/manage/"})
 public class Manage extends HttpServlet
 {
-    private boolean isCorrect(String word)
-    {
-        if (word.length() < 3)
-        {
-            return false;
-        }
-        else if (word.length() > 30)
-        {
-            return false;
-        }
-        else if (!word.matches("^[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ -]*$"))
-        {
-            return false;
-        }
-       /* else if (wordInDB != null)
-        {
-            return false;
-        }*/
-        else // slowo ok
-        {
-            return true;
-        }
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         String wordId = request.getParameter("word_id");
@@ -60,7 +37,7 @@ public class Manage extends HttpServlet
             {
                 if (wordDao.getByWord(formWord) == null /*&& isCorrect(formWord)*/) // jesli nie znaleziono takiego slowa w bazie
                 {
-                    if (isCorrect(formWord))
+                    if (WordService.isCorrect(formWord))
                     {
                         word.setWord(formWord);
                         word.setAccepted("yes");
@@ -113,7 +90,6 @@ public class Manage extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        // todo :: widok wszystkich słów + ich modyfikacja/usuwanie
         WordDao wordDao = new WordDao();
         List<Word> words = null;
         int toCheckCount = 0;

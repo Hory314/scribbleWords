@@ -1,5 +1,8 @@
 package pl.hory.Controller.Admin;
 
+import pl.hory.Dao.WordDao;
+import pl.hory.Entity.Word;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +20,10 @@ public class List extends HttpServlet
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        // words
+        WordDao wordDao = new WordDao();
+        java.util.List<Word> words = null;
+        int acceptedConut;
+
         request.setAttribute("words", words);
         getServletContext().getRequestDispatcher("/WEB-INF/views/admin/list.jsp").forward(request, response);
     }

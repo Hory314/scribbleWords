@@ -4,7 +4,7 @@
     int year = LocalDate.now().getYear();
 %>
 <div class="footer">
-    <div>Copyright © <%=year%> by Hory314, SMOK, feitur</div>
+    <div>Copyright © <%=year%> by Hory314</div>
 </div>
 </body>
 </html>
