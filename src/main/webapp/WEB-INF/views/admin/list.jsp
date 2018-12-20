@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../template/admin_header.jsp"/>
-<a href="/adminpanel/logout">Wyloguj się</a><br>
-<a href="/adminpanel/manage">Słowa do sprawdzenia</a><br>
+<a href="<c:url value="/adminpanel/logout"/>">Wyloguj się</a><br>
+<a href="<c:url value="/adminpanel/manage"/>">Słowa do sprawdzenia</a><br>
 <div style="display: inline-block; padding-right: 100px; float: left;">
     <p>
         Lista zaakceptowanych słów.
     </p>
     <p>Zaakceptowane słowa: <strong>${count}</strong></p>
-    <span style="color: red;"><c:out value="${error}"></c:out></span>
+    <span style="color: red;"><c:out value="${error}"/></span>
     <c:forEach var="word" items="${words}">
-        <form action="/adminpanel/list" method="post">
+        <form action="<c:url value="/adminpanel/list"/>" method="post">
             <input type="text" value="${word.word}" name="word" size="40" disabled>
             <button class="edit">Edytuj</button>
             <input type="submit" value="OK" style="display: none;">
@@ -25,7 +25,7 @@
         Lista odrzuconych słów.
     </p>
     <c:forEach var="word" items="${rejectedWords}">
-        <form action="/adminpanel/list" method="post">
+        <form action="<c:url value="/adminpanel/list"/>" method="post">
             <input type="submit" value="Poddaj ponownej weryfikacji">
             <input type="text" value="${word.word}" name="word" size="40" disabled>
             <span>Powód: ${word.rejectReason}</span>

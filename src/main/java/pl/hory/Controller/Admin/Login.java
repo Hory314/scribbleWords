@@ -55,14 +55,14 @@ public class Login extends HttpServlet
                 int sessMaxAge = 60 * 60 * 24 * 3; // 3 dni
                 Cookie sessionCookie = new Cookie("session_id", newSession.getId()); // sam se stworze ciastko dla sesji...
                 sessionCookie.setMaxAge(sessMaxAge); // bo chce ustawic max age
-                sessionCookie.setPath("/adminpanel");
+                sessionCookie.setPath(request.getContextPath()+"/adminpanel");
                 response.addCookie(sessionCookie);
 
                 newSession.setMaxInactiveInterval(sessMaxAge);
             }
 
             // response.sendRedirect("/adminpanel/manage/groups"); // logowanie ok, wiec przekierowujemy na cos
-            response.sendRedirect(response.encodeRedirectURL("/adminpanel/manage")); // logowanie ok, wiec przekierowujemy na cos
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+"/adminpanel/manage")); // logowanie ok, wiec przekierowujemy na cos
         }
         else
         {
@@ -89,7 +89,7 @@ public class Login extends HttpServlet
                 if (sessionAdminName.equals(this.adminName) && sessionAdminPass.equals(this.adminPass)) // i sie zgadza...
                 { // jak hasla sa w sesji
                     System.err.println("OK zapraszamy");
-                    response.sendRedirect(response.encodeRedirectURL("/adminpanel/manage")); // to user zalogowany juz - przekieruj
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+"/adminpanel/manage")); // to user zalogowany juz - przekieruj
                     return; // return zeby sie forward() nie wykonal bo bedzie error
                 }
             }

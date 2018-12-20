@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="template/doc_header.jsp"/>
 <div class="box">
-    <form action="/" method="post">
+    <form action="<c:url value="/"/>" method="post">
         <select disabled>
             <option>Polish</option>
         </select>

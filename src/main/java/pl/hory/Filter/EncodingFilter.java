@@ -28,7 +28,7 @@ public class EncodingFilter implements Filter
 
         // PAGES
         req.setCharacterEncoding("UTF-8");
-        resp.setContentType("text/html; charset=UTF-8");
+        //resp.setContentType("text/html; charset=UTF-8");//do NOT set this. Encodes files like .css .js etc. also to text/html!!!
         resp.setCharacterEncoding("UTF-8");
 
         System.err.println(LocalDateTime.now() + ": " + this.getClass().getSimpleName() + " executed.\nzażółć gęślą jaźń\nZAŻÓŁĆ GĘŚLĄ JAŹŃ");
