@@ -32,7 +32,7 @@ public class List extends HttpServlet
         }
 
         String verify = request.getParameter("verify"); // re-verification
-        if (verify.equals("1"))
+        if (verify != null)
         {
             Word word = wordDao.getById(intWordId);
             word.setReviewDate(null);
