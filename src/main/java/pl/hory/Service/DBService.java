@@ -43,7 +43,7 @@ public class DBService
         return DriverManager.getConnection(
                 "jdbc:mysql://" + host + ":" + port + "/" + dbName/*database*/ + "?useUnicode=yes&characterEncoding=UTF-8" +
                         "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC" +
-                        "&useSSL=false",
+                        "&useSSL=false&allowPublicKeyRetrieval=true",
                 user,
                 password);
     }
