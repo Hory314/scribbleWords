@@ -7,3 +7,6 @@ Web app administrator can accept, reject or edit words that users added to datab
 
 
 Users can easily copy accepted words from main site and paste them into game _custom words_ section.
+
+
+App website: http://212.47.237.134:8080/skribblWords/
